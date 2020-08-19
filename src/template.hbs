@@ -1,0 +1,257 @@
+<style type="text/css">
+  body {
+    margin-top: 350px;
+    margin-left: 0px;
+  }
+
+  .table {
+    margin-top: 15px;
+    border: none !important;
+    font-size: 12px;
+    overflow: wrap
+  }
+
+  #page_1 {
+    position: relative;
+    overflow: hidden;
+    margin: 30px 0px 150px 30px;
+    padding: 0px;
+    border: none;
+    width: 210mm;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  #page_1 #p1dimg1 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+    width: 718px;
+    height: 691px;
+  }
+
+  #page_1 #p1dimg1 #p1img1 {
+    width: 718px;
+    height: 691px;
+  }
+
+  .dclr {
+    clear: both;
+    float: none;
+    height: 1px;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+  }
+
+  .ft0 {
+    font: bold 15px 'Calibri';
+    line-height: 17px;
+  }
+
+  .ft2 {
+    font: italic 15px 'Calibri';
+    line-height: 17px;
+  }
+
+  .ft4 {
+    font: bold 15px 'Calibri';
+    line-height: 18px;
+  }
+
+  .ft13 {
+    font: 13px 'Calibri';
+    color: #000000;
+    line-height: 22px;
+  }
+
+  .ft14 {
+    font: italic 13px 'Calibri';
+    line-height: 22px;
+  }
+
+  .ft18 {
+    font: 12px 'Calibri';
+    line-height: 19px;
+  }
+
+  .p0 {
+    text-align: left;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    white-space: nowrap;
+  }
+
+  .div-titulo {
+    border-left: 5px solid #ff001b;
+    height: auto;
+  }
+
+  .h3-titulo {
+    margin-top: 5px;
+    margin-left: 10px;
+    font-weight: 500;
+    padding-top: 10px;
+    color: #000;
+  }
+
+  .table-head {
+    background-color: #86c85a;
+  }
+
+  .table-head th {
+    color: #FFFFFF;
+    font-weight: 600;
+    padding: 5px;
+  }
+
+  .th {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .tr-colunas {
+    background-color: #eff0ef;
+    border-top: 2px solid #FFFFFF;
+  }
+
+  .td {
+    padding: 5px;
+    vertical-align: middle !important;
+  }
+
+  .td-first {
+    padding-left: 15px;
+  }
+
+  .td-last {
+    padding-right: 15px;
+  }
+
+  .td-text-center {
+    text-align: center;
+  }
+</style>
+<div id="contentBox" style="background-color:white">
+  <div id="page_1">
+    <div class="dclr"></div>
+    <p class="p0 ft18" style="text-align: right;">Emissão:<strong>{{date}}</strong></p>
+    <div style="width:100%;margin-bottom: 10px; border-bottom: 1px solid #4F4F4F;color: #9F9F9F;">
+      <img src="{{operator.logo}}"
+        style="float: left;display: block;position: relative; margin-top:15px; width: auto;height: 60px;">
+    </div>
+    <h3 style="text-align: center;font">PARECER DE SEGUNDA OPINIÃO MÉDICA OU ODONTOLÓGICA</h3>
+    <table>
+      <tr>
+        <td width="80%">
+          <p class="p0 ft2">Operadora: <span class="ft0">{{operator.name}}</span></p>
+          <p class="p0 ft2">
+            {{doctorAssistant.type}}
+            <span class="ft0">{{doctorAssistant.name}}</span> -
+            {{doctorAssistant.credentialType}}: {{doctorAssistant.credentialNumber}}
+          </p>
+          <p class="p0 ft2">
+            {{doctorSpecialist.type}}
+            <span class="ft0">{{doctorSpecialist.name}}</span> -
+            {{doctorSpecialist.credentialType}}: {{doctorSpecialist.credentialNumber}}</p>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <br>
+    <p>Prezado Sr (a).</p>
+    <p style="text-align: justify;">
+      Em resposta a consulta realizada relativa ao procedimento indicado para o (a) beneficiário (a)
+      {{patient.name}}, CPF: {{patient.cpf}}, encaminhado em
+      {{dateAttendance}},
+      sob o nº <span class="ft13">{{protocolID}}</span>, apresentam-se as seguintes
+      considerações:
+    </p>
+    <div class="div-titulo">
+      <h3 class="h3-titulo">INTRODUÇÃO</h3>
+    </div>
+    <p style="text-align: justify;">
+      {{!-- <?php echo $analiseProcedimento['opiniao_resumo_beneficiario']; ?> --}}
+      {{opinionResumePatient}}
+    </p>
+
+    {{!-- <?php if(count($procedimentos)>0): ?> --}}
+    <div class="div-titulo">
+      <h3 class="h3-titulo">PROCEDIMENTOS</h3>
+    </div>
+    <table class="table">
+      <tr class="table-head">
+        <th class="th" width="5%">Qtd</th>
+        <th class="th" width="10%">Qtd sugerida</th>
+        <th class="th" width="40%">Descrição</th>
+        <th class="th" width="30%">Resultado</th>
+        <th class="th" width="15%">Justificativa</th>
+      </tr>
+      {{!-- <?php foreach ($procedimentos as $key => $procedimento):?> --}}
+      {{#each procedures}}
+      <tr class="tr-colunas">
+        <td class="td td-text-center">{{quantity}}</td>
+        <td class="td td-text-center">{{authorized_quantity}}</td>
+        <td class="td">{{procedure.descricao_tuss}}</td>
+        <td class="td">{{opinion}}</td>
+        <td class="td td-last">{{doctor_justification}}</td>
+      </tr>
+      {{/each}}
+    </table>
+
+    <p style="text-align: justify;"><b>Há outra opção de conduta (clínica ou cirúrgica)?</b></p>
+    <p style="text-align: justify;">
+      {{OpinionProcedures}}
+    </p>
+    {{!-- <?php endif; ?> --}}
+    {{!-- <?php if(count($materiais)>0): ?> --}}
+    <div class="div-titulo">
+      <h3 class="h3-titulo">MATERIAIS</h3>
+    </div>
+    <table class="table">
+      <tr class="table-head">
+        <th class="th" width="40%">Material</th>
+        <th class="th" width="5%">Qtd</th>
+        <th class="th" width="10%">Qtd sugerida</th>
+        <th class="th" width="30%">Resultado</th>
+        <th class="th" width="15%">Justificativa</th>
+      </tr>
+
+      {{!-- <?php foreach ($materiais as $key => $material): ?> --}}
+      {{#each materials}}
+      <tr class="tr-colunas">
+
+        <td class="td">{{name}}</td>
+        <td class="td td-text-center">{{quantity}}</td>
+        <td class="td td-text-center">{{authorized_quantity}}</td>
+        <td class="td">{{opinion}}</td>
+        <td class="td td-last">{{doctor_justification}}</td>
+      </tr>
+      {{/each}}
+      {{!-- <?php endforeach ?> --}}
+    </table>
+    <p style="text-align: justify;"><b>Os materiais solicitados são imprescindíveis para o procedimento? Eles podem ser
+        substituídos?</b></p>
+    <p style="text-align: justify;">
+      {{opinionMaterials}}
+    </p>
+
+    {{!-- <?php endif; ?> --}}
+    {{!-- <?php if($analiseProcedimento['opiniao_observacao_final']!=null && $analiseProcedimento['opiniao_observacao_final']!='' && $analiseProcedimento['opiniao_observacao_final']!=' '): ?> --}}
+    <p style="text-align: justify;">{{secondOpinionFinal}}</p>
+    {{!-- <?php endif; ?> --}}
+    <br>
+    <br>
+
+    <p style="text-align: justify;">Ratificamos que este parecer segue o princípio do respeito à individualidade e
+      responsabilidade profissional, baseado
+      nos modelos jurídicos preconizados pela Agência Nacional de Saúde Suplementar (ANS) e preceitos éticos dos
+      Conselhos Federais. Buscamos não interferir em questões relacionadas às decisões reservadas ao paciente ou seus
+      responsáveis, mas sim, auxiliar na garantia do seu direito à cura e livre escolha dos profissionais que o
+      assistem. </p>
+    <br />
+  </div>
+  <p class="p0 ft18">Este parecer foi emitido por {{doctorSpecialist.name}}, especialista em
+    {{specialty}}, {{doctorSpecialist.credentialType}} {{doctorSpecialist.credentialState}}
+    {{doctorSpecialist.credentialNumber}}.</p>
+</div
